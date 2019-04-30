@@ -5,10 +5,22 @@ import (
 	"github.com/universegame/universes"
 )
 
+
+
 func main() {
-	go universe_producer{}.product()
-	go universe_producer{}.product()
-	go universe_producer{}.product()
-	truck := <- wormhole
-	fmt.Println(truck)
+	go func() {
+		for {
+			go universes.Universe_producer{}.Product()
+		}
+	}()
+
+	for {
+		fmt.Println(<-universes.Wormhole)
+	}
+
+	//select {
+	//case truck := <- universes.Wormhole:
+	//	fmt.Println(truck)
+	//}
+	fmt.Println("finished")
 }
